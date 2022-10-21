@@ -29,7 +29,33 @@ const index = async (req, res) => {
   }
 }
 
+const show = async (req, res) => {
+  try {
+    const dreamcast = await Dreamcast.findById(req.params.id)
+      .populate('author')
+      .populate('comments.author')
+    res.status(200).json(dreamcast)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const update = async (req, res) => {
+  try {
+    const dreamcast = await Dreamcast.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    ).populate('author')
+    res.status(200).json(dreamcast)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
-  index
+  index,
+  show,
+  update
 }
