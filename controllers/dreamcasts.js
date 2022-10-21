@@ -18,6 +18,18 @@ const create = async (req, res) => {
   }
 }
 
+const index = async (req, res) => {
+  try {
+    const dreamcasts = await Dreamcast.find({})
+    .populate('author')
+    .sort({ createdAt: 'desc'})
+  res.status(200).json(dreamcasts)
+  } catch (error) {
+    res.status(500).json(err)  
+  }
+}
+
 export {
-  create
+  create,
+  index
 }
