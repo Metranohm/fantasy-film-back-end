@@ -9,8 +9,9 @@ const router = Router()
 
 // ========= Protected Routes ========= 
 router.use(decodeUserFromToken)
-router.post('/', checkAuth, moviesCtrl.create)
 router.get('/', checkAuth, moviesCtrl.index)
+router.get('/:id', checkAuth, moviesCtrl.show)
+router.post('/', checkAuth, moviesCtrl.create)
 
 
 
