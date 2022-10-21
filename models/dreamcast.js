@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const commentSchema = new Schema(
   {
-    review: {
+    text: {
       type: String,
       required: true
     },
@@ -16,19 +16,17 @@ const commentSchema = new Schema(
 
 const dreamcastSchema = new Schema(
   {
-    name: { type: Schema.Types.ObjectId, ref: 'Profile' },
+    author: { type: Schema.Types.ObjectId, ref: 'Profile' },
     image: {
       type: String,
       required: true,
     },
     comments: [commentSchema],
     movie: {
-      type: { type: Schema.Types.ObjectId, ref: 'Movie' },
-      required: true,
+      type: Schema.Types.ObjectId, ref: 'Movie' 
     },
     actor: {
-      type: { type: Schema.Types.ObjectId, ref: 'Actor' },
-      required: true,
+      type:  Schema.Types.ObjectId, ref: 'Actor'
     },
     
   },
