@@ -1,9 +1,14 @@
 import { Movie } from "../models/movie.js"
 
-const index = async (req, res) => {
-  
+const create = async (req, res) => {
+  try {
+    const movie = await Movie.create(req.body)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
 }
 
 export {
-	index,
+  create,
 }
