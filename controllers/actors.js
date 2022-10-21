@@ -18,7 +18,31 @@ const index = async (req,res) => {
   }
 }
 
+const show = async (req,res) => {
+  try {
+    const actor = await Actor.findById(req.params.id)
+      .populate('movies')
+    res.status(200).json(actor)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const update = async (req,res) => {
+  try {
+    const actor = await Actor.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new: true}
+    ).populate('movies')
+    res.status(200).json(actor)
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   create,
   index,
+  show,
+  update,
 }
