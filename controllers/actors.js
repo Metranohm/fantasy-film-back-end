@@ -9,7 +9,16 @@ const create = async (req, res) => {
   }
 }
 
+const index = async (req,res) => {
+  try {
+    const actors = await Actor.find({})
+    res.status(200).json(actors)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   create,
-  
+  index,
 }

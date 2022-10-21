@@ -8,7 +8,8 @@ const actorSchema = new Schema({
     required: true,
   },
   photo: String,
-  movies : { type: Schema.Types.ObjectId, ref: 'Movie' },
+  //movies : { type: Schema.Types.ObjectId, ref: 'Movie' },
+  movies : String,
 },{
   timestamps: true,
 })
