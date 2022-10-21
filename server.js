@@ -6,7 +6,11 @@ import formData from 'express-form-data'
 
 import { router as profilesRouter } from './routes/profiles.js'
 import { router as authRouter } from './routes/auth.js'
+import { router as dreamcastsRouter } from './routes/dreamcasts.js'
+import { router as actorRouter } from './routes/actors.js'
 import { router as moviesRouter } from './routes/movies.js'
+
+
 
 import './config/database.js'
 
@@ -19,6 +23,8 @@ app.use(formData.parse())
 
 app.use('/api/profiles', profilesRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/dreamcasts', dreamcastsRouter)
+app.use('/api/actors', actorRouter)
 app.use('/api/movies', moviesRouter)
 
 app.use(function (req, res, next) {

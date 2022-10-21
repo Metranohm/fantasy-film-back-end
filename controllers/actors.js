@@ -1,9 +1,9 @@
-import { Movie } from "../models/movie.js"
+import { Actor } from "../models/actor.js";
 
 const create = async (req, res) => {
   try {
-    const movie = await Movie.create(req.body)
-    res.json(movie)
+    const actor = await Actor.create(req.body)
+    res.json(actor)
   } catch (error) {
     console.log(error)
   }
@@ -11,4 +11,5 @@ const create = async (req, res) => {
 
 export {
   create,
+  
 }
