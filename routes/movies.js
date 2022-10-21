@@ -10,6 +10,7 @@ const router = Router()
 // ========= Protected Routes ========= 
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, moviesCtrl.create)
+router.get('/', checkAuth, moviesCtrl.index)
 
 
 
