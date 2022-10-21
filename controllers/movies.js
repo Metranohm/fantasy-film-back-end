@@ -9,6 +9,28 @@ const create = async (req, res) => {
   }
 }
 
+const index = async (req, res) => {
+  try {
+    const movies = await Movie.find({})
+      .sort({ createdAt: 'desc' })
+    res.status(200).json(movies)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const show = async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id)
+      .populate('actors')
+    res.status(200).json(movie)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
+  index,
+  show,
 }
