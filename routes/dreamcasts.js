@@ -10,6 +10,7 @@ const router = Router()
 // ========= Protected Routes ========= 
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, dreamcastsCtrl.create)
+router.get('/', checkAuth, dreamcastsCtrl.index)
 
 
 export { router }
