@@ -12,7 +12,7 @@ const movieSchema = new Schema(
       type: String,
       required: true
     },
-    actors: { type: Schema.Types.ObjectId, ref: 'Actor' }
+    actors: [{ type: Schema.Types.ObjectId, ref: 'Actor' }]
   },
   { timestamps: true }
 )
