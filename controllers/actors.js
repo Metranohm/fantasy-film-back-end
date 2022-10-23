@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Actor } from "../models/actor.js";
 
 const create = async (req, res) => {
@@ -40,9 +41,18 @@ const update = async (req,res) => {
     console.log(error)
   }
 }
+
+const search = async (req,res) => {
+  axios.get(`https://api.themoviedb.org/3/search/person?api_key=${process.env.TMDB_API_Key}&language=en-US&query=${req.body.actorSearch}&page=1&include_adult=false`)
+  .then( response => {
+    res.json(response.data.results)
+  })
+}
+
 export {
   create,
   index,
   show,
   update,
+  search,
 }
