@@ -11,6 +11,8 @@ const router = Router()
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, dreamcastsCtrl.create)
 router.get('/', checkAuth, dreamcastsCtrl.index)
+router.get('/:id', checkAuth, dreamcastsCtrl.show)
+router.put('/:id', checkAuth, dreamcastsCtrl.update)
 
 
 export { router }
