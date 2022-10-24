@@ -53,9 +53,22 @@ const update = async (req, res) => {
   }
 }
 
+const deleteDreamcast = async (req, res) => {
+  try {
+    const dreamcast = await Dreamcast.findByIdAndDelete(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    profile.dreamcasts.remove({ _id: req.params.id })
+    await profile.save()
+    res.status(200).json(dreamcast)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
-  update
+  update,
+  deleteDreamcast as delete
 }
