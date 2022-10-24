@@ -41,7 +41,6 @@ const credits = async (req,res) => {
   try {
     axios.get(`https://api.themoviedb.org/3/movie/${req.params.id}/credits?api_key=${process.env.TMDB_API_Key}&language=en-US&page=1&include_adult=false`)
     .then( response => {
-      console.log(response.data.cast)
       res.json(response.data.cast)
     })
     
@@ -50,11 +49,20 @@ const credits = async (req,res) => {
   }
 }
 
+const deleteMovie = async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndDelete(req.params.id)
+    res.status(200).json(movie)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 export {
   create,
   index,
   show,
   search,
-  credits
+  credits,
+  deleteMovie as delete
 }

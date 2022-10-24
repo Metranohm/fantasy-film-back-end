@@ -53,9 +53,38 @@ const update = async (req, res) => {
   }
 }
 
+const deleteDreamcast = async (req, res) => {
+  try {
+    const dreamcast = await Dreamcast.findByIdAndDelete(req.params.id)
+    const profile = await Profile.findById(req.user.profile)
+    profile.dreamcasts.remove({ _id: req.params.id })
+    await profile.save()
+    res.status(200).json(dreamcast)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const createComment = async (req, res) => {
+  try {
+    req.body.author = req.user.profile
+    const dreamcast = await Dreamcast.findById(req.params.id)
+    dreamcast.comments.push(req.body)
+    await blog.save()
+    const newComment = deleteDreamcast.comments[dreamcast.comments.length - 1]
+    const profile = await Profile.findById(req.user.profile)
+    newComment.author = profile
+    res.status(201).json(newComment)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
-  update
+  update,
+  deleteDreamcast as delete,
+  createComment
 }

@@ -42,6 +42,15 @@ const update = async (req,res) => {
   }
 }
 
+const deleteActor = async (req, res) => {
+  try {
+    const actor = await Actor.findByIdAndDelete(req.params.id)
+    res.status(200).json(actor)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 const search = async (req,res) => {
   axios.get(`https://api.themoviedb.org/3/search/person?api_key=${process.env.TMDB_API_Key}&language=en-US&query=${req.body.actorSearch}&page=1&include_adult=false`)
   .then( response => {
@@ -55,4 +64,6 @@ export {
   show,
   update,
   search,
+  deleteActor as delete,
+  
 }
