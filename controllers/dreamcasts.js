@@ -65,10 +65,26 @@ const deleteDreamcast = async (req, res) => {
   }
 }
 
+const createComment = async (req, res) => {
+  try {
+    req.body.author = req.user.profile
+    const dreamcast = await Dreamcast.findById(req.params.id)
+    dreamcast.comments.push(req.body)
+    await blog.save()
+    const newComment = deleteDreamcast.comments[dreamcast.comments.length - 1]
+    const profile = await Profile.findById(req.user.profile)
+    newComment.author = profile
+    res.status(201).json(newComment)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
   update,
-  deleteDreamcast as delete
+  deleteDreamcast as delete,
+  createComment
 }
