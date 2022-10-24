@@ -58,11 +58,25 @@ const deleteMovie = async (req, res) => {
   }
 }
 
+const update = async (req,res) => {
+  try {
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new: true}
+    ).populate('actors')
+    res.status(200).json(movie)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   create,
   index,
   show,
   search,
   credits,
-  deleteMovie as delete
+  deleteMovie as delete,
+  update
 }
