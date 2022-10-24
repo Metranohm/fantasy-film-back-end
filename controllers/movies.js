@@ -49,11 +49,20 @@ const credits = async (req,res) => {
   }
 }
 
+const deleteMovie = async (req, res) => {
+  try {
+    const movie = await Movie.findByIdAndDelete(req.params.id)
+    res.status(200).json(movie)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 export {
   create,
   index,
   show,
   search,
-  credits
+  credits,
+  deleteMovie as delete
 }

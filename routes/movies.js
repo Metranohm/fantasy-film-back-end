@@ -13,6 +13,7 @@ router.get('/', checkAuth, moviesCtrl.index)
 router.get('/:id', checkAuth, moviesCtrl.show)
 router.post('/', checkAuth, moviesCtrl.create)
 router.post('/search', checkAuth, moviesCtrl.search)
+router.delete('/:id', checkAuth, moviesCtrl.delete)
 router.post('/credits/:id', checkAuth, moviesCtrl.credits)
 
 
