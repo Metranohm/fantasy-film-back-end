@@ -10,6 +10,16 @@ function index(req, res) {
   })
 }
 
+function show(req, res) {
+  Profile.findById(req.user.profile)
+  .populate('favoriteActors')
+  .then(profile => res.json(profile))
+  .catch(err => {
+    console.log(err)
+    res.status(500).json(err)
+  })
+}
+
 function addPhoto(req, res) {
   const imageFile = req.files.photo.path
   Profile.findById(req.params.id)
@@ -29,4 +39,5 @@ function addPhoto(req, res) {
   })
 }
 
-export { index, addPhoto }
+
+export { index, addPhoto, show }
