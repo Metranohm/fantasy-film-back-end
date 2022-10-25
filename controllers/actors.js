@@ -69,6 +69,29 @@ const search = async (req,res) => {
   })
 }
 
+const favorite = async (req,res) => {
+try {
+  const profile = await Profile.findById(req.user.profile)
+  .populate('favoriteActors')
+  console.log(profile.favoriteActors)
+  const isFavActor = profile.favoriteActors.some(el => el.tmdbID === parseInt(req.body.tmdbID))
+  res.json(isFavActor)
+} catch (error) {
+  console.log(error)
+}
+}
+const deleteFavorite = async (req,res) => {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    .populate('favoriteActors')
+    const keptActors = profile.favoriteActors.filter(actors => actors.tmdbID !== parseInt(req.body.tmdbID))
+    console.log(keptActors)
+    profile.favoriteActors = keptActors
+    profile.save()
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   create,
   index,
@@ -76,5 +99,6 @@ export {
   update,
   search,
   deleteActor as delete,
-  
+  favorite,
+  deleteFavorite
 }

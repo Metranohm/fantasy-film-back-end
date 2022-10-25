@@ -10,6 +10,8 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, actorsCtrl.index)
+router.post('/favorite', checkAuth, actorsCtrl.favorite)
+router.delete('/favorite', checkAuth, actorsCtrl.deleteFavorite)
 router.get('/:id',checkAuth, actorsCtrl.show)
 router.put('/:id', checkAuth, actorsCtrl.update)
 router.post('/', checkAuth, actorsCtrl.create)
