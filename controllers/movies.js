@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Movie } from "../models/movie.js"
+import { Profile } from "../models/profile.js";
 
 const create = async (req, res) => {
   try {
@@ -36,6 +37,17 @@ const search = async (req,res) => {
     res.json(response.data.results)
   })
 }
+
+const favorite = async (req,res) => {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    .populate('favoriteMovies')
+    const isFavMovie = profile.favoriteMovies.some(el => el.tmdbID === parseInt(req.body.tmdbID))
+    res.json(isFavMovie)
+  } catch (error) {
+    console.log(error)
+  }
+  }
 
 const credits = async (req,res) => {
   try {
@@ -78,5 +90,6 @@ export {
   search,
   credits,
   deleteMovie as delete,
-  update
+  update,
+  favorite
 }

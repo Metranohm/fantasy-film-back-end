@@ -1,10 +1,21 @@
 import axios from "axios";
 import { Actor } from "../models/actor.js";
+import { Profile } from "../models/profile.js";
 
 const create = async (req, res) => {
   try {
-    const actor = await Actor.create(req.body)
-    res.json(actor)
+    const actor = await Actor.findOne({'tmdbID': `${req.body.tmdbID}`})
+    const profile = await Profile.findById(req.user.profile)
+    if(actor){
+      profile.favoriteActors.push(actor)
+      profile.save()
+      res.json(actor)
+    }else{
+      const newActor = await Actor.create(req.body)
+      profile.favoriteActors.push(newActor)
+      profile.save()
+      res.json(newActor)
+    }
   } catch (error) {
     console.log(error)
   }
@@ -58,6 +69,28 @@ const search = async (req,res) => {
   })
 }
 
+const favorite = async (req,res) => {
+try {
+  const profile = await Profile.findById(req.user.profile)
+  .populate('favoriteActors')
+  const isFavActor = profile.favoriteActors.some(el => el.tmdbID === parseInt(req.body.tmdbID))
+  res.json(isFavActor)
+} catch (error) {
+  console.log(error)
+}
+}
+const deleteFavorite = async (req,res) => {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    .populate('favoriteActors')
+    const keptActors = profile.favoriteActors.filter(actors => actors.tmdbID !== parseInt(req.body.tmdbID))
+    profile.favoriteActors = keptActors
+    profile.save()
+    res.json({msg: 'ok'})
+  } catch (error) {
+    console.log(error)
+  }
+}
 export {
   create,
   index,
@@ -65,5 +98,6 @@ export {
   update,
   search,
   deleteActor as delete,
-  
+  favorite,
+  deleteFavorite
 }
