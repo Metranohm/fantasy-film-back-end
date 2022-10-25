@@ -1,14 +1,20 @@
 import axios from "axios";
 import { Actor } from "../models/actor.js";
+import { Profile } from "../models/profile.js";
 
 const create = async (req, res) => {
   try {
     const actor = await Actor.findOne({'tmdbID': `${req.body.tmdbID}`})
+    const profile = await Profile.findById(req.user.profile)
     if(actor){
+      profile.favoriteActors.push(actor)
+      profile.save()
       res.json(actor)
     }else{
-      const actor = await Actor.create(req.body)
-      res.json(actor)
+      const newActor = await Actor.create(req.body)
+      profile.favoriteActors.push(newActor)
+      profile.save()
+      res.json(newActor)
     }
   } catch (error) {
     console.log(error)
