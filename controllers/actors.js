@@ -3,8 +3,13 @@ import { Actor } from "../models/actor.js";
 
 const create = async (req, res) => {
   try {
-    const actor = await Actor.create(req.body)
-    res.json(actor)
+    const actor = await Actor.findOne({'tmdbID': `${req.body.tmdbID}`})
+    if(actor){
+      res.json(actor)
+    }else{
+      const actor = await Actor.create(req.body)
+      res.json(actor)
+    }
   } catch (error) {
     console.log(error)
   }
