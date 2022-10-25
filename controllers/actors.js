@@ -11,10 +11,10 @@ const create = async (req, res) => {
       profile.save()
       res.json(actor)
     }else{
-      const actor = await Actor.create(req.body)
-      profile.favoriteActors.push(actor)
+      const newActor = await Actor.create(req.body)
+      profile.favoriteActors.push(newActor)
       profile.save()
-      res.json(actor)
+      res.json(newActor)
     }
   } catch (error) {
     console.log(error)
