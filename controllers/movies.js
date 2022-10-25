@@ -79,6 +79,19 @@ const deleteMovie = async (req, res) => {
   }
 }
 
+const deleteFavorite = async (req,res) => {
+  try {
+    const profile = await Profile.findById(req.user.profile)
+    .populate('favoriteMovies')
+    const remainingMovies = profile.favoriteMovies.filter(movies => movies.tmdbID !== parseInt(req.body.tmdbID))
+    profile.favoriteMovies = remainingMovies
+    profile.save()
+    res.json({msg: 'ok'})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const update = async (req,res) => {
   try {
     const movie = await Movie.findByIdAndUpdate(
@@ -100,5 +113,6 @@ export {
   credits,
   deleteMovie as delete,
   update,
-  favorite
+  favorite,
+  deleteFavorite
 }
