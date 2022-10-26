@@ -19,7 +19,6 @@ const movieSchema = new Schema(
     },
     image: {
       type: String,
-      required: true
     },
     tmdbID : Number,
     cast: [castSchema],

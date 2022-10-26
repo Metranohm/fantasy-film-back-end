@@ -11,7 +11,9 @@ const create = async (req, res) => {
       profile.save()
       res.json(movie)
     }else{
-      const newMovie = await movie.create(req.body)
+      const newMovie = await 
+      Movie.create(req.body)
+      console.log(newMovie)
       profile.favoriteMovies.push(newMovie)
       profile.save()
       res.json(newMovie)
