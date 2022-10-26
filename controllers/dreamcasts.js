@@ -22,6 +22,8 @@ const create = async (req, res) => {
     dreamcast.tmdbID = req.body.tmdbID
     dreamcast.cast = cast
     dreamcast.save()
+    profile.dreamCast = dreamcast
+    profile.save()
     console.log(dreamcast)
     // const profile = await Profile.findByIdAndUpdate(
     //   req.user.profile,
