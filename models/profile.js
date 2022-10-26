@@ -7,6 +7,7 @@ const profileSchema = new Schema({
   photo: String,
   dreamCast: [{type: Schema.Types.ObjectId, ref: 'Dreamcast'}],
   favoriteActors: [{type: Schema.Types.ObjectId, ref: 'Actor'}], 
+  favoriteMovies: [{type: Schema.Types.ObjectId, ref: 'Movie'}],
 },{
   timestamps: true,
 })

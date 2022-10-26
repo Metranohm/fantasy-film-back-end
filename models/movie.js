@@ -2,6 +2,15 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
+const castSchema = new Schema(
+  {
+    character: {
+      type: String
+    },
+    actors: [{ type: Schema.Types.ObjectId, ref: 'Actor' }]
+  }
+)
+
 const movieSchema = new Schema(
   {
     name: {
@@ -10,9 +19,9 @@ const movieSchema = new Schema(
     },
     image: {
       type: String,
-      required: true
     },
-    actors: [{ type: Schema.Types.ObjectId, ref: 'Actor' }]
+    tmdbID : Number,
+    cast: [castSchema],
   },
   { timestamps: true }
 )
