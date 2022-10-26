@@ -1,17 +1,37 @@
 import { Profile } from "../models/profile.js"
 import { Dreamcast } from "../models/dreamcast.js"
+import { Actor } from "../models/actor.js"
 
 const create = async (req, res) => {
   try {
+    let cast = []
+    const profile = await Profile.findById(req.user.profile)
+    const dreamcast = await Dreamcast.create({})
     req.body.author = req.user.profile
-    const dreamcast = await Dreamcast.create(req.body)
-    const profile = await Profile.findByIdAndUpdate(
-      req.user.profile,
-      { $push: { dreamcasts: dreamcast } },
-      { new: true }
-    )
-    dreamcast.author = profile
-    res.status(201).json(dreamcast)
+    // const dreamcast = await Dreamcast.create(req.body)
+    for (let idx = 0; idx < req.body.cast.length; idx++ ) {
+      const foundActor = await Actor.findOne({'tmdbID': `${req.body.cast[idx].actors}`})
+      cast.push({
+        character: 
+          req.body.cast[idx].character,
+        actor: foundActor
+      })
+    }
+    dreamcast.name = req.body.name
+    dreamcast.image = req.body.photo
+    dreamcast.tmdbID = req.body.tmdbID
+    dreamcast.cast = cast
+    dreamcast.save()
+    profile.dreamCast = dreamcast
+    profile.save()
+    console.log(dreamcast)
+    // const profile = await Profile.findByIdAndUpdate(
+    //   req.user.profile,
+    //   { $push: { dreamcasts: dreamcast } },
+    //   { new: true }
+    // )
+    // dreamcast.author = profile
+    // res.status(201).json(dreamcast)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
