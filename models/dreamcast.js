@@ -14,21 +14,27 @@ const commentSchema = new Schema(
   { timestamps: true }
 )
 
+const castSchema = new Schema(
+  {
+    character: {
+      type: String
+    },
+    actor: { type: Schema.Types.ObjectId, ref: 'Actor' }
+  }
+)
+
 const dreamcastSchema = new Schema(
   {
-    author: { type: Schema.Types.ObjectId, ref: 'Profile' },
+    name: {
+      type: String,
+      
+    },
     image: {
       type: String,
-      required: true,
     },
-    comments: [commentSchema],
-    movie: {
-      type: Schema.Types.ObjectId, ref: 'Movie' 
-    },
-    actor: {
-      type:  Schema.Types.ObjectId, ref: 'Actor'
-    },
-    
+    tmdbID : Number,
+    cast: [castSchema],
+    comments: [commentSchema]
   },
   { timestamps: true }
 )

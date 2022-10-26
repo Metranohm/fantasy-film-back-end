@@ -4,14 +4,25 @@ import { Actor } from "../models/actor.js"
 
 const create = async (req, res) => {
   try {
+    let cast = []
+    const profile = await Profile.findById(req.user.profile)
+    const dreamcast = await Dreamcast.create({})
     req.body.author = req.user.profile
     // const dreamcast = await Dreamcast.create(req.body)
-    
-    
-    for (let cast = 0; cast < req.body.cast.length; cast++ ) {
-      const actor = await Actor.findOne({'tmdbID': `${req.body.cast[cast].actors}`})
-      console.log(actor.name, req.body.cast[cast].character)
+    for (let idx = 0; idx < req.body.cast.length; idx++ ) {
+      const foundActor = await Actor.findOne({'tmdbID': `${req.body.cast[idx].actors}`})
+      cast.push({
+        character: 
+          req.body.cast[idx].character,
+        actor: foundActor
+      })
     }
+    dreamcast.name = req.body.name
+    dreamcast.image = req.body.photo
+    dreamcast.tmdbID = req.body.tmdbID
+    dreamcast.cast = cast
+    dreamcast.save()
+    console.log(dreamcast)
     // const profile = await Profile.findByIdAndUpdate(
     //   req.user.profile,
     //   { $push: { dreamcasts: dreamcast } },
