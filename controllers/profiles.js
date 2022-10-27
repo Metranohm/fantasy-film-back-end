@@ -13,6 +13,7 @@ function index(req, res) {
 function show(req, res) {
   Profile.findById(req.user.profile)
   .populate('favoriteActors')
+  .populate('favoriteMovies')
   .then(profile => res.json(profile))
   .catch(err => {
     console.log(err)

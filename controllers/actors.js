@@ -73,7 +73,7 @@ const favorite = async (req,res) => {
 try {
   const profile = await Profile.findById(req.user.profile)
   .populate('favoriteActors')
-  const isFavActor = profile.favoriteActors.some(el => el.tmdbID === parseInt(req.body.tmdbID))
+  const isFavActor = profile.favoriteActors.some(actor => actor.tmdbID === parseInt(req.body.tmdbID))
   res.json(isFavActor)
 } catch (error) {
   console.log(error)
