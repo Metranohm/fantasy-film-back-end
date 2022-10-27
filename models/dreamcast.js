@@ -12,32 +12,33 @@ const commentSchema = new Schema(
     author: { type: Schema.Types.ObjectId, ref: 'Profile' }
   },
   { timestamps: true }
-)
-
-const castSchema = new Schema(
-  {
-    character: {
-      type: String
-    },
-    actor: { type: Schema.Types.ObjectId, ref: 'Actor' }
-  }
-)
-
-const dreamcastSchema = new Schema(
-  {
-    name: {
-      type: String,
-      
-    },
-    image: {
-      type: String,
-    },
-    tmdbID : Number,
-    cast: [castSchema],
-    comments: [commentSchema]
-  },
-  { timestamps: true }
-)
+  )
+  
+  const castSchema = new Schema(
+    {
+      character: {
+        type: String
+      },
+      actor: { type: Schema.Types.ObjectId, ref: 'Actor' }
+    }
+    )
+    
+    const dreamcastSchema = new Schema(
+      {
+        name: {
+          type: String,
+          
+        },
+        image: {
+          type: String,
+        },
+        tmdbID : Number,
+        cast: [castSchema],
+        comments: [commentSchema],
+        author: { type: Schema.Types.ObjectId, ref: 'Profile' }
+      },
+      { timestamps: true }
+      )
 
 const Dreamcast = mongoose.model('Dreamcast', dreamcastSchema)
 

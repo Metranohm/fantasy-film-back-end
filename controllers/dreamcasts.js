@@ -7,7 +7,6 @@ const create = async (req, res) => {
     let cast = []
     const profile = await Profile.findById(req.user.profile)
     const dreamcast = await Dreamcast.create({})
-    req.body.author = req.user.profile
     for (let idx = 0; idx < req.body.cast.length; idx++ ) {
       const foundActor = await Actor.findOne({'tmdbID': `${req.body.cast[idx].actors}`})
       cast.push({
@@ -20,6 +19,7 @@ const create = async (req, res) => {
     dreamcast.image = req.body.photo
     dreamcast.tmdbID = req.body.tmdbID
     dreamcast.cast = cast
+    dreamcast.author = req.user.profile
     dreamcast.save()
     profile.dreamCast = dreamcast
     profile.save()
@@ -33,7 +33,7 @@ const create = async (req, res) => {
 const index = async (req, res) => {
   try {
     const dreamcasts = await Dreamcast.find({})
-    .populate('author')
+    .populate('cast.actor')
     .sort({ createdAt: 'desc'})
   res.status(200).json(dreamcasts)
   } catch (error) {
@@ -55,11 +55,11 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const dreamcast = await Dreamcast.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    )
+    const dreamcast = await Dreamcast.findById(req.params.dcId)
+    .populate('cast.actor')
+    const cast = dreamcast.cast.id(req.params.castId)
+    cast.actor = req.body.actor
+    await dreamcast.save()
     res.status(200).json(dreamcast)
   } catch (err) {
     res.status(500).json(err)
@@ -70,7 +70,7 @@ const deleteDreamcast = async (req, res) => {
   try {
     const dreamcast = await Dreamcast.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
-    profile.dreamcasts.remove({ _id: req.params.id })
+    profile.dreamCast.remove({ _id: req.params.id })
     await profile.save()
     res.status(200).json(dreamcast)
   } catch (err) {
