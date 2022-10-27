@@ -7,7 +7,7 @@ const castSchema = new Schema(
     character: {
       type: String
     },
-    actors: [{ type: Schema.Types.ObjectId, ref: 'Actor' }]
+    actors: { type: Schema.Types.ObjectId, ref: 'Actor' }
   }
 )
 
@@ -15,7 +15,6 @@ const movieSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
     },
     image: {
       type: String,

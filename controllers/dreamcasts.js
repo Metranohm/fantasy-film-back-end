@@ -8,7 +8,6 @@ const create = async (req, res) => {
     const profile = await Profile.findById(req.user.profile)
     const dreamcast = await Dreamcast.create({})
     req.body.author = req.user.profile
-    // const dreamcast = await Dreamcast.create(req.body)
     for (let idx = 0; idx < req.body.cast.length; idx++ ) {
       const foundActor = await Actor.findOne({'tmdbID': `${req.body.cast[idx].actors}`})
       cast.push({
@@ -24,14 +23,7 @@ const create = async (req, res) => {
     dreamcast.save()
     profile.dreamCast = dreamcast
     profile.save()
-    console.log(dreamcast)
-    // const profile = await Profile.findByIdAndUpdate(
-    //   req.user.profile,
-    //   { $push: { dreamcasts: dreamcast } },
-    //   { new: true }
-    // )
-    // dreamcast.author = profile
-    // res.status(201).json(dreamcast)
+    res.status(201).json(dreamcast)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
@@ -52,8 +44,9 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const dreamcast = await Dreamcast.findById(req.params.id)
-      .populate('author')
-      .populate('comments.author')
+    .populate({
+      path:'cast.actor',
+      model: 'Actor'})
     res.status(200).json(dreamcast)
   } catch (err) {
     res.status(500).json(err)
