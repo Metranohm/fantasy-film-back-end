@@ -55,11 +55,12 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const dreamcast = await Dreamcast.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    )
+    console.log()
+    const dreamcast = await Dreamcast.findById(req.params.dcId)
+    .populate('cast.actor')
+    const cast = dreamcast.cast.id(req.params.castId)
+    cast.actor = req.body.actor
+    await dreamcast.save()
     res.status(200).json(dreamcast)
   } catch (err) {
     res.status(500).json(err)
@@ -70,7 +71,7 @@ const deleteDreamcast = async (req, res) => {
   try {
     const dreamcast = await Dreamcast.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
-    profile.dreamcasts.remove({ _id: req.params.id })
+    profile.dreamCast.remove({ _id: req.params.id })
     await profile.save()
     res.status(200).json(dreamcast)
   } catch (err) {

@@ -12,7 +12,7 @@ router.use(decodeUserFromToken)
 router.post('/', checkAuth, dreamcastsCtrl.create)
 router.get('/', checkAuth, dreamcastsCtrl.index)
 router.get('/:id', checkAuth, dreamcastsCtrl.show)
-router.put('/:id', checkAuth, dreamcastsCtrl.update)
+router.put('/:dcId/cast/:castId', checkAuth, dreamcastsCtrl.update)
 router.delete('/:id', checkAuth, dreamcastsCtrl.delete)
 router.post('/:id/comments', checkAuth, dreamcastsCtrl.createComment)
 
