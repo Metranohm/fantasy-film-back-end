@@ -1,18 +1,36 @@
 import axios from "axios";
 import { Movie } from "../models/movie.js"
 import { Profile } from "../models/profile.js";
+import { Actor } from "../models/actor.js";
 
 const create = async (req, res) => {
   try {
-    const movie = await Movie.findOne({'tmdbID': `${req.body.tmdbID}`})
+
+    let cast =[]
+
     const profile = await Profile.findById(req.user.profile)
+    const movie = await Movie.findOne({'tmdbID': `${req.body.tmdbID}`})
     if(movie){
       profile.favoriteMovies.push(movie)
       profile.save()
       res.json(movie)
     }else{
-      const newMovie = await Movie.create(req.body)
-      profile.favoriteMovies.push(newMovie)
+      const newMovie = await Movie.create({})
+
+      for (let idx = 0; idx < req.body.cast.length; idx++ ) {
+        const foundActor = await Actor.findOne({'tmdbID': `${req.body.cast[idx].actors}`})
+        cast.push({
+          character: 
+          req.body.cast[idx].character,
+          actor: foundActor
+        })
+      }
+      newMovie.name = req.body.name
+      newMovie.image = req.body.photo
+      newMovie.tmdbID = req.body.tmdbID
+      newMovie.cast = cast
+      newMovie.save()
+      profile.favoriteMovies = newMovie
       profile.save()
       res.json(newMovie)
     }
