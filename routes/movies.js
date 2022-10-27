@@ -15,8 +15,8 @@ router.put('/:id', checkAuth, moviesCtrl.update)
 router.post('/', checkAuth, moviesCtrl.create)
 router.post('/search', checkAuth, moviesCtrl.search)
 router.post('/favorite', checkAuth, moviesCtrl.favorite)
+router.post('/credits/:id', checkAuth, moviesCtrl.credits)
 router.delete('/:id', checkAuth, moviesCtrl.delete)
 router.delete('/favorite', checkAuth, moviesCtrl.deleteFavorite)
-router.post('/credits/:id', checkAuth, moviesCtrl.credits)
 
 export { router }

@@ -66,7 +66,7 @@ const update = async (req, res) => {
       req.params.id,
       req.body,
       { new: true }
-    ).populate('author')
+    )
     res.status(200).json(dreamcast)
   } catch (err) {
     res.status(500).json(err)
