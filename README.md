@@ -31,7 +31,7 @@ Like fantasy sports, the idea of Fantasy Filmmaker is to allow the user the abil
 ## Planning Materials
 -[Trello](https://trello.com/b/nJhah0ta/fantasy-filmmaking)
 -[ERD](https://whimsical.com/film-app-3PPzi7oRtLtawhkU9BE7SQ)
--[Wireframe]()
+-[Wireframe](https://i.postimg.cc/MHD2F9J0/Wireframe.png)
 
 ## Technologies Used
 
@@ -50,8 +50,12 @@ Like fantasy sports, the idea of Fantasy Filmmaker is to allow the user the abil
 -JWT Auth
 
 ## Credit to
-TMDB - The Movie Database API
+[TMDB - The Movie Database API](https://www.themoviedb.org/?language=en-US)
 Note: This product uses the TMDB API but is not endorsed or certified by TMDB."
+
+Button styling from [Bootstrap](https://getbootstrap.com/), licensed by MIT.
+
+Imagery and logo created using AI : [DALL-E](https://openai.com/dall-e-2/))
 
 ## Icebox Items
 
