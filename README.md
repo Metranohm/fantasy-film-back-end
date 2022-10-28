@@ -1,10 +1,10 @@
-# Fantasy Film Making Back End
+# Filmingo: Fantasy Filmmaking
 
 Click here to create some [Movie Magic!]()
 
-## About Fantasy Filmmakers
+## About Filmingo
 
-Welcome to Fantasy Filmmakers, an ALG Production!
+Welcome to Filmingo: Fantasy Filmmaking, an ALG Production!
 
 Have you ever thought that though a movie may have been good, it would have been way better had there been a different actor/actress in a particular role? Well, then you have come to the right place.This application is a group project inspired by the concept of creating your own dream movie cast for any movie of your choice. 
 
